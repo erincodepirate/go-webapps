@@ -2,15 +2,26 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
+	"github.com/erincodepirate/go-webapps/html/pkg/config"
 	"github.com/erincodepirate/go-webapps/html/pkg/handlers"
+	"github.com/erincodepirate/go-webapps/html/pkg/render"
 )
 
 const portNumber = ":8080"
 
 // main is main function
 func main() {
+	var app config.AppConfig
+
+	tc, err := render.CreateTemplateCache()
+	if err != nil {
+		log.Fatal("cannot create template cache")
+	}
+
+	app.TemplateCache = tc
 	http.HandleFunc("/", handlers.Home)
 	http.HandleFunc("/about", handlers.About)
 
